@@ -1,3 +1,3 @@
 # JavaGUI-CurdOperation
 
-[Assignment2 (2) - Tagged.pdf](https://github.com/ravigelani1124/JavaGUI-CurdOperation/files/10718662/Assignment2.2.-.Tagged.pdf)
+Develop an application to manage the product details using a binary file. The application should save the information of each field of the product using binary format and each record should be of the same size. Possible operations and sample GUI is provided for your reference.
