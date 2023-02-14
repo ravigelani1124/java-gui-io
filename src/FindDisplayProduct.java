@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-
 public class FindDisplayProduct extends JFrame implements ActionListener {
     private ButtonGroup radioGroup;
     private JRadioButton priceRangeRadio,keywordRadio,allRadio;
@@ -22,14 +20,16 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         setScreenLayout();
     }
     private void setMainFrame() {
+        //This method is used to set main frame.
         setTitle("Find/Display Products");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        setSize(Utils.FRAME_WIDTH, Utils.FRAME_HEIGHT);
+        setSize(Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
         setLocationRelativeTo(null);
     }
     private void setScreenLayout() {
+        //this method is used set GUI components in frame
         JPanel mainFirstPanel = new JPanel();
         Box box1 = Box.createVerticalBox();
 
@@ -47,7 +47,8 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         radioGroup.add(allRadio);
         mainFirstPanel.add(box1);
 
-        JPanel testPanel = new JPanel();
+        JPanel inputsPanel = new JPanel();
+        
         JPanel fromPanel = new JPanel();
         JLabel fromLabel = new JLabel("From");
         fromInput = new JTextField();
@@ -59,7 +60,6 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         JLabel toLabel = new JLabel("To");
         toInput = new JTextField();
         toInput.setColumns(8);
-        toInput.setToolTipText("To");
         toPanel.add(toLabel);
         toPanel.add(toInput);
 
@@ -70,14 +70,16 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         keywordPanel.add(keywordLabel);
         keywordPanel.add(keywordInput);
 
-        testPanel.add(fromPanel);
-        testPanel.add(toPanel);
+        inputsPanel.add(fromPanel);
+        inputsPanel.add(toPanel);
 
         JPanel panel = new JPanel();
-        panel.add(testPanel);
-       // panel.add(keywordPanel);
+        panel.setLayout(new GridLayout(2,1));
 
+        panel.add(inputsPanel);
+        panel.add(keywordPanel);
         mainFirstPanel.add(panel);
+
         btnSearch = new JButton("Find/Display");
         mainFirstPanel.add(btnSearch);
         JPanel scrollPanel = new JPanel();
@@ -96,15 +98,14 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         btnSearch.addActionListener(this);
         setVisible(true);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnSearch){
             findProduct();
         }
     }
-
     private void findProduct() {
+        // This method is used to find data from file based on user selection.
         String keyword = keywordInput.getText().trim();
         String fromPrice = fromInput.getText().trim();
         String toPrice = toInput.getText().trim();
@@ -116,10 +117,11 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         } else if (priceRangeRadio.isSelected()) {
             displayProductByPriceRange(fromPrice, toPrice);
         } else {
-            JOptionPane.showMessageDialog(null, "Please select any search option from radio buttons.");
+            JOptionPane.showMessageDialog(null, "Please select any search option such as All,Keyword and Price");
         }
     }
     private void displayProductByKeyword(String keyword) {
+        // This method is used to get all product data based on keywords.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -140,6 +142,7 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
     }
 
     private void displayAllProducts() {
+        // This method is used to get all product data.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -153,6 +156,7 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
     }
 
     private void displayProductByPriceRange(String fromPrice, String toPrice) {
+        // This method is used to get all product data based on price range.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();

@@ -21,14 +21,16 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         setScreenLayout();
     }
     private void setMainFrame() {
+        //this method is used set main frame
         setTitle("Add/Update"); // set title of frame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false); // prevent frame of being resized
-        setSize(Utils.FRAME_WIDTH, Utils.FRAME_HEIGHT); // set the x and y dimension of frame
+        setSize(Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT); // set the x and y dimension of frame
         setLocationRelativeTo(null); //centre window
     }
 
     private void setScreenLayout() {
+        //this method is used set GUI components in frame
         JLabel idLabel = new JLabel("Product ID : ");
         idInput = new JTextField(12);
         JLabel nameLabel = new JLabel("Name :         ");
@@ -129,6 +131,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
     private void addProduct() {
+        // This method is used to validate user data and add into file.
         if(validateData()) {
             String name = nameInput.getText().trim();
             String description = descInput.getText().trim();
@@ -144,6 +147,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     private void updateProduct() {
+        // This method is used to validate user data and update into file.
         if(validateData()) {
             String name = nameInput.getText().trim();
             String description = descInput.getText().trim();
@@ -173,6 +177,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     public boolean validateData() {
+        // This method is used to validate user data.
         String productId= idInput.getText().trim();
         String name = nameInput.getText().trim();
         String description = descInput.getText().trim();
@@ -199,6 +204,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     private void saveProductData() {
+        // This method is used to validate save data into.
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/productsInfo.dat"));
             oos.writeObject(productList);
@@ -217,6 +223,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
     private void getFirstProduct() {
+        // This method is used to get first data from file and set into label.
         if(productList.size()>0){
             currentProductIndex=0;
             setDataInLabel(currentProductIndex);
@@ -226,6 +233,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     private void getPreviousProduct() {
+        // This method is used to get previous data from file and set into label.
         if(currentProductIndex>0){
             currentProductIndex--;
             setDataInLabel(currentProductIndex);
@@ -235,6 +243,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     private void getNextProduct() {
+        // This method is used to get next data from file and set into label.
         if (currentProductIndex < productList.size() - 1) {
             currentProductIndex++;
             setDataInLabel(currentProductIndex);
@@ -244,6 +253,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     public void getLastProduct() {
+        // This method is used to get last data from file and set into label.
         if (productList.size()>0) {
             currentProductIndex = productList.size() - 1;
             setDataInLabel(currentProductIndex);
@@ -253,6 +263,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     }
 
     public void setDataInLabel(int currentProductIndex){
+        // This method is used to set data based on index from file and set into label.
         idInput.setText(String.valueOf(productList.get(currentProductIndex).getId()));
         nameInput.setText(productList.get(currentProductIndex).getName());
         descInput.setText(productList.get(currentProductIndex).getDescription());
