@@ -16,7 +16,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
     private ArrayList<ProductInfo> productList = new ArrayList<>();
     private int currentProductIndex=0;
     AddUpdateProduct(){
-        getData();
+        productList=Utility.getProductList();
         setMainFrame();
         setScreenLayout();
     }
@@ -214,24 +214,6 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
             System.out.println("Not able to find file.");
         } catch (IOException e) {
             System.out.println("Something happen while writing data into file." + e.getLocalizedMessage());
-        }
-    }
-    private void getData() {
-        File file = new File("src/productsInfo.dat");
-        if(file.exists()) {
-            try (ObjectInputStream inputStream  = new ObjectInputStream(new FileInputStream(file))){
-                productList = (ArrayList<ProductInfo>) inputStream.readObject();
-                System.out.println("The Object has been read from the file");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                System.out.println("File not found.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Error reading file.");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                System.out.println("Class not found.");
-            }
         }
     }
     private void getFirstProduct() {

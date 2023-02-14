@@ -1,19 +1,22 @@
+import data.ProductInfo;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FindDisplayProduct extends JFrame{
+public class FindDisplayProduct extends JFrame implements ActionListener {
     private ButtonGroup radioGroup;
-    private JRadioButton priceRangeRadio;
-    private JRadioButton keywordRadio;
-    private JRadioButton allRadio;
-    private JTextField toInput;
-    private JTextField fromInput;
-    private JTextField keywordInput;
+    private JRadioButton priceRangeRadio,keywordRadio,allRadio;
+    private JTextField toInput,fromInput,keywordInput;
     private JTable table;
     private JButton btnSearch;
 
+    private ArrayList<ProductInfo> productList;
     FindDisplayProduct(){
         setMainFrame();
         setScreenLayout();
@@ -90,7 +93,87 @@ public class FindDisplayProduct extends JFrame{
         centerPanel.add(mainFirstPanel);
         add(centerPanel,BorderLayout.CENTER);
         add(scrollPanel,BorderLayout.SOUTH);
+        btnSearch.addActionListener(this);
         setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==btnSearch){
+            findProduct();
+        }
+    }
+
+    private void findProduct() {
+        String keyword = keywordInput.getText().trim();
+        String fromPrice = fromInput.getText().trim();
+        String toPrice = toInput.getText().trim();
+
+        if (allRadio.isSelected()) {
+            displayAllProducts();
+        } else if (keywordRadio.isSelected()) {
+            displayProductByKeyword(keyword);
+        } else if (priceRangeRadio.isSelected()) {
+            displayProductByPriceRange(fromPrice, toPrice);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select any search option from radio buttons.");
+        }
+    }
+    private void displayProductByKeyword(String keyword) {
+        try {
+            productList = Utility.getProductList();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            boolean isDataFound=false;
+            model.setRowCount(0);
+            for (ProductInfo product : productList) {
+                if (product.getName().toLowerCase().contains(keyword.toLowerCase()) || product.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                    model.addRow(new Object[] { product.getId(), product.getName(),product.getDescription(),product.getQuantity() ,product.getPrice() });
+                    isDataFound=true;
+                }
+            }
+            if (!isDataFound) {
+                JOptionPane.showMessageDialog(null, "Sorry! Not any product found while searching the keyword " + keyword + ".");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void displayAllProducts() {
+        try {
+            productList = Utility.getProductList();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            for (ProductInfo product : productList) {
+                model.addRow(new Object[] { product.getId(), product.getName(),product.getDescription(),product.getQuantity() ,product.getPrice() });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sorry! No data found");
+        }
+    }
+
+    private void displayProductByPriceRange(String fromPrice, String toPrice) {
+        try {
+            productList = Utility.getProductList();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            boolean isDataFound=false;
+            double from = Double.parseDouble(fromPrice);
+            double to = Double.parseDouble(toPrice);
+            model.setRowCount(0);
+            for (ProductInfo product : productList) {
+                if (product.getPrice() >= from && product.getPrice() <= to) {
+                    System.out.println(product.getPrice());
+                    model.addRow(new Object[] { product.getId(), product.getName(),product.getDescription(),product.getQuantity() ,product.getPrice() });
+                    isDataFound=true;
+                }
+            }
+            if (!isDataFound) {
+                JOptionPane.showMessageDialog(null, "Sorry! Not products is found in this price range.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong " +" "+ e.getMessage());
+        }
     }
 
 }
