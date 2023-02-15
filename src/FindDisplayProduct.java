@@ -19,8 +19,13 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         setMainFrame();
         setScreenLayout();
     }
+
+    /*
+     * @ Function Name      : setMainFrame
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to set main frame.
+     */
     private void setMainFrame() {
-        //This method is used to set main frame.
         setTitle("Find/Display Products");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -28,6 +33,12 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         setSize(Utility.FRAME_WIDTH, Utility.FRAME_HEIGHT);
         setLocationRelativeTo(null);
     }
+
+    /*
+     * @ Function Name      : setScreenLayout
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set GUI components in frame
+     */
     private void setScreenLayout() {
         //this method is used set GUI components in frame
         JPanel mainFirstPanel = new JPanel();
@@ -82,6 +93,7 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
 
         btnSearch = new JButton("Find/Display");
         mainFirstPanel.add(btnSearch);
+
         JPanel scrollPanel = new JPanel();
         JScrollPane scrollPane = new JScrollPane();
         scrollPanel.add(scrollPane);
@@ -104,8 +116,13 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
             findProduct();
         }
     }
+
+    /*
+     * @ Function Name      : findProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to find data from file based on user selection.
+     */
     private void findProduct() {
-        // This method is used to find data from file based on user selection.
         String keyword = keywordInput.getText().trim();
         String fromPrice = fromInput.getText().trim();
         String toPrice = toInput.getText().trim();
@@ -120,8 +137,13 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, "Please select any search option such as All,Keyword and Price");
         }
     }
+
+    /*
+     * @ Function Name      : displayProductByKeyword
+     * @ Function Params    : keyword : String
+     * @ Function Purpose   : This method is used to get all product data based on keywords.
+     */
     private void displayProductByKeyword(String keyword) {
-        // This method is used to get all product data based on keywords.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -141,8 +163,12 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         }
     }
 
+    /*
+     * @ Function Name      : displayAllProducts
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to get all product data.
+     */
     private void displayAllProducts() {
-        // This method is used to get all product data.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -155,8 +181,12 @@ public class FindDisplayProduct extends JFrame implements ActionListener {
         }
     }
 
+    /*
+     * @ Function Name      : displayAllProducts
+     * @ Function Params    : String fromPrice, String toPrice
+     * @ Function Purpose   : This method is used to get all product data based on price range.
+     */
     private void displayProductByPriceRange(String fromPrice, String toPrice) {
-        // This method is used to get all product data based on price range.
         try {
             productList = Utility.getProductList();
             DefaultTableModel model = (DefaultTableModel) table.getModel();

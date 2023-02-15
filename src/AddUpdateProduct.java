@@ -20,8 +20,13 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         setMainFrame();
         setScreenLayout();
     }
+
+    /*
+     * @ Function Name      : setMainFrame
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set main frame
+     */
     private void setMainFrame() {
-        //this method is used set main frame
         setTitle("Add/Update"); // set title of frame
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false); // prevent frame of being resized
@@ -29,8 +34,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         setLocationRelativeTo(null); //centre window
     }
 
+    /*
+     * @ Function Name      : setScreenLayout
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set GUI components in frame
+     */
     private void setScreenLayout() {
-        //this method is used set GUI components in frame
         JLabel idLabel = new JLabel("Product ID : ");
         idInput = new JTextField(12);
         JLabel nameLabel = new JLabel("Name :         ");
@@ -42,17 +51,17 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         JLabel priceLabel = new JLabel("Unit Price :           ");
         priceInput = new JTextField(10);
         btnAdd = new JButton("Add");
-        btnAdd.setPreferredSize(new Dimension(140, 40));
+        btnAdd.setPreferredSize(new Dimension(138, 38));
         btnFirst = new JButton("First");
-        btnFirst.setPreferredSize(new Dimension(140, 40));
+        btnFirst.setPreferredSize(new Dimension(138, 38));
         btnPrevious = new JButton("Previous");
-        btnPrevious.setPreferredSize(new Dimension(140, 40));
+        btnPrevious.setPreferredSize(new Dimension(138, 38));
         btnNext = new JButton("Next");
-        btnNext.setPreferredSize(new Dimension(140, 40));
+        btnNext.setPreferredSize(new Dimension(138, 38));
         btnLast = new JButton("Last");
-        btnLast.setPreferredSize(new Dimension(140, 40));
+        btnLast.setPreferredSize(new Dimension(138, 38));
         btnUpdate = new JButton("Update");
-        btnUpdate.setPreferredSize(new Dimension(140, 40));
+        btnUpdate.setPreferredSize(new Dimension(138, 38));
 
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(4, 1));
@@ -130,8 +139,13 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
             getLastProduct();
         }
     }
+
+    /*
+     * @ Function Name      : addProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to validate user data and add into file.
+     */
     private void addProduct() {
-        // This method is used to validate user data and add into file.
         if(validateData()) {
             String name = nameInput.getText().trim();
             String description = descInput.getText().trim();
@@ -146,8 +160,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : updateProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to validate user data and update into file.
+     */
     private void updateProduct() {
-        // This method is used to validate user data and update into file.
         if(validateData()) {
             String name = nameInput.getText().trim();
             String description = descInput.getText().trim();
@@ -176,8 +194,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : validateData
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to validate user data
+     */
     public boolean validateData() {
-        // This method is used to validate user data.
         String productId= idInput.getText().trim();
         String name = nameInput.getText().trim();
         String description = descInput.getText().trim();
@@ -203,8 +225,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         return isVaid;
     }
 
+    /*
+     * @ Function Name      : saveProductData
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to validate save data into.
+     */
     private void saveProductData() {
-        // This method is used to validate save data into.
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/productsInfo.dat"));
             oos.writeObject(productList);
@@ -222,8 +248,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
             System.out.println("Something happen while writing data into file." + e.getLocalizedMessage());
         }
     }
+    /*
+     * @ Function Name      : getFirstProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to get first data from file and set into label.
+     */
     private void getFirstProduct() {
-        // This method is used to get first data from file and set into label.
         if(productList.size()>0){
             currentProductIndex=0;
             setDataInLabel(currentProductIndex);
@@ -232,8 +262,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : getPreviousProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to get previous data from file and set into label.
+     */
     private void getPreviousProduct() {
-        // This method is used to get previous data from file and set into label.
         if(currentProductIndex>0){
             currentProductIndex--;
             setDataInLabel(currentProductIndex);
@@ -242,8 +276,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : getNextProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to get next data from file and set into label.
+     */
     private void getNextProduct() {
-        // This method is used to get next data from file and set into label.
         if (currentProductIndex < productList.size() - 1) {
             currentProductIndex++;
             setDataInLabel(currentProductIndex);
@@ -252,8 +290,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : getLastProduct
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to get last data from file and set into label.
+     */
     public void getLastProduct() {
-        // This method is used to get last data from file and set into label.
         if (productList.size()>0) {
             currentProductIndex = productList.size() - 1;
             setDataInLabel(currentProductIndex);
@@ -262,8 +304,12 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         }
     }
 
+    /*
+     * @ Function Name      : setDataInLabel
+     * @ Function Params    : currentProductIndex : Int
+     * @ Function Purpose   : This method is used to set data based on index from file and set into label.
+     */
     public void setDataInLabel(int currentProductIndex){
-        // This method is used to set data based on index from file and set into label.
         idInput.setText(String.valueOf(productList.get(currentProductIndex).getId()));
         nameInput.setText(productList.get(currentProductIndex).getName());
         descInput.setText(productList.get(currentProductIndex).getDescription());
