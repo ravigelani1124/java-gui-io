@@ -14,6 +14,12 @@ public class Home extends JFrame implements ActionListener {
         setMenu();
         setMenuItem();
     }
+
+    /*
+     * @ Function Name      : setMainFrame
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used to set main frame.
+     */
     private void setMainFrame() {
         //this method is used set main frame
         setTitle("Product Display");
@@ -29,21 +35,35 @@ public class Home extends JFrame implements ActionListener {
         panel.setBounds(90,130,450,100);
         setLayout(null);
         add(panel);
-
     }
+
+    /*
+     * @ Function Name      : setMainMenuBar
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set menubar in frame
+     */
     private void setMainMenuBar() {
-        //this method is used set menubar in frame
         jMenuBar = new JMenuBar();
     }
+
+    /*
+     * @ Function Name      : setMenu
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set menus in frame.
+     */
     private void setMenu() {
-        //this method is used set menus in frame
         menuFile = new JMenu("File");
         menuProduct = new JMenu("Product");
         jMenuBar.add(menuFile);
         jMenuBar.add(menuProduct);
     }
+
+    /*
+     * @ Function Name      : setMenuItem
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used set menu items in Menu
+     */
     private void setMenuItem() {
-        //this method is used set menu items in Menu
         menuItemExit = new JMenuItem("Exit");
         menuItemAddUpdate = new JMenuItem("Add/Update");
         menuItemFindDisplay = new JMenuItem("Find/Display");
@@ -67,6 +87,11 @@ public class Home extends JFrame implements ActionListener {
             new FindDisplayProduct();
         }
     }
+    /*
+     * @ Function Name      : main
+     * @ Function Params    : None
+     * @ Function Purpose   : This method is used execute the program
+     */
     public static void main(String[] args) {
         new Home();
     }
