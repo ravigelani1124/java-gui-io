@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AddUpdateProduct extends JFrame implements ActionListener{
     private JTextField idInput,nameInput,quantityInput,priceInput;
@@ -152,11 +151,22 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
             int productID = Integer.parseInt(idInput.getText().trim());
             int quantity = Integer.parseInt(quantityInput.getText().trim());
             double unitPrice = Double.parseDouble(priceInput.getText().trim());
-            System.out.println("product " + productID + name + description+ quantity + unitPrice) ;
-            ProductInfo product = new ProductInfo(productID, name, description,unitPrice,quantity);
-            productList.add(product);
-            saveProductData();
-            JOptionPane.showMessageDialog(this, "Product added successfully.");
+
+            boolean isDataInFile = false;
+            for(int i=0 ; i<=productList.size()-1;i++){
+                if(productList.get(i).getId()==productID){
+                    isDataInFile=true;
+                    break;
+                }
+            }
+            if(!isDataInFile){
+                ProductInfo product = new ProductInfo(productID, name, description,unitPrice,quantity);
+                productList.add(product);
+                saveProductData();
+                JOptionPane.showMessageDialog(this, "Product added successfully.");
+            }else {
+                JOptionPane.showMessageDialog(this, "Sorry! Product id is already in the file");
+            }
         }
     }
 
@@ -206,7 +216,7 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         String quantity = quantityInput.getText().trim();
         String price= priceInput.getText().trim();
 
-        boolean isVaid = false;
+        boolean isValid = false;
         if (!Utility.isValidNumber(productId) || productId.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter valid ID.");
         } else if (name.isEmpty()) {
@@ -220,9 +230,9 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         } else if (!Utility.isValidNumber(price) || price.isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Please enter valid price");
         } else {
-            isVaid = true;
+            isValid = true;
         }
-        return isVaid;
+        return isValid;
     }
 
     /*
@@ -316,5 +326,4 @@ public class AddUpdateProduct extends JFrame implements ActionListener{
         quantityInput.setText(String.valueOf(productList.get(currentProductIndex).getQuantity()));
         priceInput.setText(String.valueOf(productList.get(currentProductIndex).getPrice()));
     }
-
 }
